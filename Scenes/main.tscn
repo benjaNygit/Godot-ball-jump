@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbi8fht1ddn1g"]
+[gd_scene load_steps=5 format=3 uid="uid://cbi8fht1ddn1g"]
 
 [ext_resource type="Script" path="res://Scripts/GameController.gd" id="1_2wh22"]
 [ext_resource type="PackedScene" uid="uid://dhdr8ue1saopo" path="res://Scenes/player.tscn" id="1_3mhav"]
@@ -6,8 +6,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uuw1y"]
 size = Vector2(203, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6cklk"]
+size = Vector2(189, 20)
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_2wh22")
+
+[node name="Main Camera" type="Camera2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_3mhav")]
+position = Vector2(-100, 0)
 
 [node name="Pause Menu" type="Control" parent="."]
 process_mode = 3
@@ -51,20 +59,17 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Continuar"
 
-[node name="Player" parent="." instance=ExtResource("1_3mhav")]
-position = Vector2(-100, 0)
+[node name="Limit Superior" type="StaticBody2D" parent="."]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-62, -153)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Limit Superior"]
+position = Vector2(-102, -334)
 shape = SubResource("RectangleShape2D_uuw1y")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(2, 76)
-shape = SubResource("RectangleShape2D_uuw1y")
+[node name="Kill Zone" type="Area2D" parent="."]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Kill Zone"]
+position = Vector2(-95, 334)
+shape = SubResource("RectangleShape2D_6cklk")
+debug_color = Color(0.941176, 0, 0, 0.419608)
 
 [connection signal="pressed" from="Pause Menu/Button" to="." method="unpause"]
