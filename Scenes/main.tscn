@@ -1,10 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbi8fht1ddn1g"]
+[gd_scene load_steps=6 format=3 uid="uid://cbi8fht1ddn1g"]
 
 [ext_resource type="Script" path="res://Scripts/GameController.gd" id="1_2wh22"]
 [ext_resource type="PackedScene" uid="uid://dhdr8ue1saopo" path="res://Scenes/player.tscn" id="1_3mhav"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uuw1y"]
-size = Vector2(203, 20)
+[ext_resource type="Script" path="res://Scripts/BlocksManager.gd" id="2_a5vks"]
+[ext_resource type="PackedScene" uid="uid://u86wuhkpvsbx" path="res://Scenes/Blocks/block_1.tscn" id="3_vh4l2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6cklk"]
 size = Vector2(189, 20)
@@ -12,6 +11,11 @@ size = Vector2(189, 20)
 [node name="Main" type="Node2D" node_paths=PackedStringArray("start_point")]
 script = ExtResource("1_2wh22")
 start_point = NodePath("Start Point")
+
+[node name="Blocks Controller" type="Node" parent="." node_paths=PackedStringArray("bloks")]
+script = ExtResource("2_a5vks")
+speed = 100.0
+bloks = [NodePath("../Block 1")]
 
 [node name="Main Camera" type="Camera2D" parent="."]
 
@@ -110,18 +114,14 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Volver a empezar"
 
-[node name="Limit Superior" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Limit Superior"]
-position = Vector2(-102, -334)
-shape = SubResource("RectangleShape2D_uuw1y")
-
 [node name="Kill Zone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Kill Zone"]
 position = Vector2(-95, 334)
 shape = SubResource("RectangleShape2D_6cklk")
 debug_color = Color(0.941176, 0, 0, 0.419608)
+
+[node name="Block 1" parent="." instance=ExtResource("3_vh4l2")]
 
 [connection signal="pressed" from="Pause Menu/Button" to="." method="unpause"]
 [connection signal="pressed" from="Game Over Menu/Button" to="." method="start_game"]
