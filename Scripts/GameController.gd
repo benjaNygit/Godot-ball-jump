@@ -2,6 +2,10 @@ extends Node2D
 
 @export var start_point : Marker2D
 
+func _ready():
+	start_game()
+	pause()
+
 # Pausar el juego
 func _input(event):
 	if Input.is_action_just_pressed("Pause"):
