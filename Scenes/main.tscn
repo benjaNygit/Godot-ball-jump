@@ -9,12 +9,15 @@ size = Vector2(203, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6cklk"]
 size = Vector2(189, 20)
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("start_point")]
 script = ExtResource("1_2wh22")
+start_point = NodePath("Start Point")
 
 [node name="Main Camera" type="Camera2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("1_3mhav")]
+
+[node name="Start Point" type="Marker2D" parent="."]
 position = Vector2(-100, 0)
 
 [node name="Pause Menu" type="Control" parent="."]
@@ -59,6 +62,54 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Continuar"
 
+[node name="Game Over Menu" type="Control" parent="."]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -183.0
+offset_right = 20.0
+offset_bottom = 205.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="Game Over Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.0
+offset_top = -116.0
+offset_right = 44.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "Game Over"
+
+[node name="Button" type="Button" parent="Game Over Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Volver a empezar"
+
 [node name="Limit Superior" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Limit Superior"]
@@ -73,3 +124,5 @@ shape = SubResource("RectangleShape2D_6cklk")
 debug_color = Color(0.941176, 0, 0, 0.419608)
 
 [connection signal="pressed" from="Pause Menu/Button" to="." method="unpause"]
+[connection signal="pressed" from="Game Over Menu/Button" to="." method="start_game"]
+[connection signal="body_entered" from="Kill Zone" to="." method="_on_kill_zone_body_entered"]
